@@ -66,3 +66,39 @@ Based on these findings, I recommend the following operational changes:
 
 * `02_SQL_Scripts`: Contains the ordered SQL queries used for table creation, cleaning, and analysis.
 
+
+
+
+
+
+
+# Hospital Readmission Analysis: Diabetic Patient Records
+
+## Project Overview
+This project analyzes a decade of clinical care data from 130 US hospitals to identify factors that contribute to patient readmission within 30 days. By performing end-to-end data engineering in MySQL and visualization in Tableau, I identified high-risk patient demographics and clinical triggers that can help healthcare providers reduce hospital return rates.
+
+## Live Dashboard
+The interactive visualization for this project is hosted on Tableau Public:
+[View Interactive Dashboard](https://public.tableau.com/views/DiabetesPatientReadmissionAnalysis/Dashboard1)
+
+## Tools Used
+* **SQL (MySQL):** Data cleaning, feature engineering, and exploratory analysis.
+* **Tableau:** Interactive dashboarding and trend visualization.
+* **Excel:** Initial data mapping and lookup table preparation.
+
+## Data Transformation Process
+The raw dataset contained several inconsistencies that required a structured SQL approach before analysis could begin:
+
+* **Null Standardization:** Converted non-standard missing values (marked as '?') into SQL NULLs to maintain data integrity.
+* **Refining the Study Population:** I excluded records for patients who passed away or were discharged to hospice. Since these patients cannot be readmitted, including them would have skewed the readmission rate downward.
+* **Categorical Mapping:** The raw data used over 700 ICD-9 medical codes. I used SQL CASE statements to group these into 9 meaningful clinical categories (e.g., Circulatory, Respiratory, Digestive) to make the findings actionable for hospital management.
+* **Feature Engineering:** Created descriptive labels for readmission status and mapped ID codes to their full text descriptions for better readability in Tableau.
+
+## Key Findings
+* **Age-Related Risk:** Patients in the 70-90 age bracket show the highest frequency of early readmission, suggesting a need for enhanced post-discharge support for the elderly.
+* **Primary Drivers:** While the dataset focuses on diabetic patients, the primary diagnosis for most readmitted cases was related to the Circulatory System (Heart Health).
+* **Medication Correlation:** There is a notable correlation between the number of medications prescribed during a stay and the likelihood of readmission, indicating that case complexity is a major risk factor.
+
+## Recommendations
+1. **Targeted Follow-ups:** Prioritize 48-hour follow-up calls for patients over 70 with circulatory diagnoses.
+2. **Specialized Care Paths:** Develop specific discharge protocols for patients with high "number of medications" counts, as they represent the most complex and high-risk cases.
