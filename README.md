@@ -13,7 +13,7 @@ This project analyzes a dataset of **10+ years of hospital records** (Diabetes d
 ---
 
 ## Live Dashboard
-👉 **[Click here to view the Interactive Tableau Dashboard](https://public.tableau.com/views/DiabetesPatientReadmissionAnalysis/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)** *Explore the readmission rates by age, gender, and medical diagnosis.*
+**[Click here to view the Interactive Tableau Dashboard](https://public.tableau.com/views/DiabetesPatientReadmissionAnalysis/Dashboard1?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)** *Explore the readmission rates by age, gender, and medical diagnosis.*
 
 ---
 
@@ -69,4 +69,5 @@ Based on these findings, I recommend the following operational changes:
 
 .
 2. **Specialized Care Paths:** Develop specific discharge protocols for patients with high "number of medications" counts, as they represent the most complex and high-risk cases.
+
 
