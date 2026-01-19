@@ -17,6 +17,7 @@ This project analyzes a dataset of **10+ years of hospital records** (Diabetes d
 ## 🛠 Tools & Technologies
 * **MySQL:** Used for ETL (Extract, Transform, Load), comprehensive data cleaning, and Exploratory Data Analysis (EDA).
 * **Tableau:** Used to build the interactive dashboard.
+* **Excel/CSV:** Initial data mapping and quality checks.
 
 ---
 
@@ -59,4 +60,5 @@ Based on these findings, I recommend the following operational changes:
 
 ## 📂 Repository Structure
 * `01_Data`: Contains the cleaned CSV dataset and ID mapping files.
+
 * `02_SQL_Scripts`: Contains the ordered SQL queries used for table creation, cleaning, and analysis.
