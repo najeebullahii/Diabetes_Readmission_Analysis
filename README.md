@@ -1,4 +1,7 @@
 # 🏥 Hospital Readmission Analysis (Diabetes Patients)
+![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
+![Tableau](https://img.shields.io/badge/Tableau-E97627?style=for-the-badge&logo=Tableau&logoColor=white)
+![Excel](https://img.shields.io/badge/Microsoft_Excel-217346?style=for-the-badge&logo=microsoft-excel&logoColor=white)
 
 ## 📄 Project Overview
 In healthcare system, hospital readmissions—specifically those occurring within 30 days of discharge are a primary performance metric. High readmission rates cost hospitals millions in penalties and indicate gaps in patient care. 
@@ -62,3 +65,4 @@ Based on these findings, I recommend the following operational changes:
 * `01_Data`: Contains the cleaned CSV dataset and ID mapping files.
 
 * `02_SQL_Scripts`: Contains the ordered SQL queries used for table creation, cleaning, and analysis.
+
