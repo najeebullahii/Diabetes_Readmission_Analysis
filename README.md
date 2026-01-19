@@ -1,10 +1,7 @@
-# Hospital Readmission Analysis (Diabetes Patients)
-![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
-![Tableau](https://img.shields.io/badge/Tableau-E97627?style=for-the-badge&logo=Tableau&logoColor=white)
-![Excel](https://img.shields.io/badge/Microsoft_Excel-217346?style=for-the-badge&logo=microsoft-excel&logoColor=white)
+# Hospital Readmission Analysis: Diabetic Patient Records
 
 ## Project Overview
-In healthcare system, hospital readmissions—specifically those occurring within 30 days of discharge are a primary performance metric. High readmission rates cost hospitals millions in penalties and indicate gaps in patient care. 
+In healthcare system, hospital readmissions specifically those occurring within 30 days of discharge are a primary performance metric. High readmission rates cost hospitals millions in penalties and indicate gaps in patient care. 
 
 This project analyzes a dataset of **10+ years of hospital records** (Diabetes dataset) to identify the root causes of early readmissions. By cleaning the raw data in MySQL and visualizing trends in Tableau, I uncovered patterns related to patient age, medical specialty, and discharge procedures.
 
@@ -69,5 +66,6 @@ Based on these findings, I recommend the following operational changes:
 
 .
 2. **Specialized Care Paths:** Develop specific discharge protocols for patients with high "number of medications" counts, as they represent the most complex and high-risk cases.
+
 
 
