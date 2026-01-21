@@ -57,11 +57,16 @@ Based on these findings, I recommend the following operational changes:
 3.  **Home Health Utilization:** Increase the use of Home Health Agencies for patients currently scheduled to be discharged to "Home (Self Care)".
 
 ---
+## Challenges & Learning
+The biggest challenge in this project was dealing with the ICD-9 diagnosis codes. Mapping over 700 individual codes into 9 clean categories required a lot of logical planning in SQL, but it made the final Tableau dashboard much easier for a non-medical user to understand.
+
+---
 
 ## Repository Structure
 * `01_Data`: Contains the cleaned CSV dataset and ID mapping files.
 
 * `02_SQL_Scripts`: Contains the ordered SQL queries used for table creation, cleaning, and analysis.
+
 
 
 
