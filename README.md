@@ -102,8 +102,6 @@ The end result — a clean nine-category breakdown — made the Tableau dashboar
 
 ## Repository Structure
 ```
-## Repository Structure
-```
 Diabetes_Readmission_Analysis/
 ├── 01_Data/
 │   ├── diabetic_data(raw).csv               # Original raw dataset from UCI
