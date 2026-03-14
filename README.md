@@ -4,89 +4,57 @@
 
 **Dataset:** 10 years of diabetic patient hospital records — 101,766 encounters across 130 US hospitals (1999–2008)
 
----
+## What This Project Is About
 
-## Project Overview
+Hospital readmissions are expensive, preventable, and a direct signal that something went wrong in the discharge process. In the US, hospitals face financial penalties from Medicare when their readmission rates exceed national benchmarks which means this is not just a clinical problem, it is a business problem too.
 
-Hospital readmissions within 30 days of discharge are one of the most closely watched metrics in healthcare. In the United States alone, preventable readmissions cost the healthcare system over $26 billion annually, and hospitals face direct financial penalties under Medicare when readmission rates exceed benchmarks.
+I took a decade of diabetic patient records from 130 US hospitals and used MySQL to clean the data, run exploratory analysis, and build a Tableau dashboard that answers one specific question: which patients are most likely to come back within 30 days, and what can the hospital actually do about it?
 
-This project analyses a decade of diabetic patient records to identify which patient groups carry the highest risk of early readmission — and why. The full pipeline runs from raw data ingestion and cleaning in MySQL, through exploratory analysis using SQL, to an interactive Tableau dashboard that translates clinical patterns into operational recommendations.
-
-The goal is not just to describe the data but to answer a specific business question: where should hospital discharge teams focus their attention to prevent unnecessary readmissions?
-
----
+The dataset covers 101,766 patient encounters between 1999 and 2008. It is messy, medically complex, and exactly the kind of data that looks intimidating until you build a system for handling it.
 
 ## Dashboard Preview
 
 ![Diabetes Patient Readmission Dashboard](https://raw.githubusercontent.com/najeebullahii/Diabetes_Readmission_Analysis/main/03_Visualizations/dashboard_overview.png)
 
-*The dashboard visualises readmission rates by age group, primary diagnosis category, and discharge disposition — the three factors most strongly associated with 30-day readmission risk.*
+*The dashboard breaks down readmission rates by age group, primary diagnosis category, and discharge destination, the three factors that consistently showed the strongest relationship with early readmission.*
 
----
+## What I Found
 
-## Business Questions Answered
+**Age matters more than the diagnosis itself.** Patients over 70 had the highest 30-day readmission rates by a clear margin. This group often lacks the support system needed to follow discharge instructions properly, and the data reflects that.
 
-- Which patient age groups have the highest 30-day readmission rates?
-- Does the primary diagnosis at admission predict the likelihood of readmission?
-- Does the discharge destination — home, nursing facility, or home health agency — affect whether a patient returns within 30 days?
-- What operational changes would have the greatest impact on reducing readmission rates?
+**The diabetes label is misleading.** The dataset is entirely diabetic patients, so you would expect diabetes-related complications to drive most readmissions. They do not. Circulatory and Respiratory conditions were the primary diagnosis categories associated with early readmission. For care teams, this means that managing blood sugar alone is not enough, diabetic patients who also have heart or lung conditions need a completely different discharge protocol.
 
----
-
-## Key Findings
-
-**1. Age is the strongest individual predictor**
-
-Patients over the age of 70 showed the highest probability of 30-day readmission. This finding points directly to a gap in discharge planning for elderly patients — a group that frequently lacks the support infrastructure needed to manage post-discharge care independently.
-
-**2. The primary driver of readmission is not diabetes**
-
-Despite the dataset consisting entirely of diabetic patients, the leading diagnosis categories associated with readmission were Circulatory and Respiratory conditions — not diabetes itself. This is a critical insight for care teams: managing blood sugar alone is insufficient. Diabetic patients with comorbid heart or lung conditions require a different, more intensive discharge protocol.
-
-**3. Discharge destination determines outcome**
-
-Patients discharged to home without support had measurably higher readmission rates than those transferred to Skilled Nursing Facilities or placed under Home Health Agency care. The act of sending a high-risk patient home without structured follow-up is itself a risk factor.
-
----
+**Where you send a patient after discharge determines whether they come back.** Patients discharged to home without any follow-up support had measurably higher readmission rates than those transferred to Skilled Nursing Facilities or connected with a Home Health Agency. The discharge destination is not just an administrative decision it is a clinical one.
 
 ## Recommendations
 
-**Senior Check-In Protocol**
-Implement a mandatory follow-up call within 48 hours for all patients over 70 discharged to home. This single intervention targets the highest-risk cohort directly.
+**Senior Check-In Protocol.** A mandatory follow-up call within 48 hours for all patients over 70 discharged to home would directly target the highest-risk group. This does not require new infrastructure just a structured process.
 
-**Comorbidity-Aware Discharge Instructions**
-Develop specialised discharge documentation for diabetic patients who also present with Circulatory or Respiratory diagnoses. Standard diabetes management instructions are insufficient for this subgroup.
+**Comorbidity-Aware Discharge Instructions.** Standard diabetes management handouts are not sufficient for patients who also present with circulatory or respiratory diagnoses. This subgroup needs specialised documentation that addresses the conditions actually driving their readmissions.
 
-**Home Health Agency Expansion**
-Increase referrals to Home Health Agencies for patients currently classified as Home (Self Care) discharge. The data shows that structured home support significantly reduces return visits.
+**Home Health Agency Expansion.** The data shows a clear difference in outcomes between patients who receive structured home support and those who do not. Increasing referrals to Home Health Agencies for patients currently classified as Home (Self Care) discharge is a direct, evidence-based intervention.
 
----
+## Data Cleaning and Transformation
 
-## Data Cleaning & Transformation
-
-All cleaning was performed in MySQL before analysis. The raw dataset contained several issues that required systematic resolution.
+All cleaning was done in MySQL before any analysis began. The raw dataset had several problems that needed to be resolved systematically before it was usable.
 
 | Step | Issue | Resolution |
 |---|---|---|
 | Null handling | Missing values encoded as `?` | Standardised to NULL for accurate aggregation |
-| Bias removal | Deceased and hospice patients included | Removed — these patients cannot be readmitted and would artificially deflate the readmission rate |
+| Bias removal | Deceased and hospice patients included | Removed — these patients cannot be readmitted and their inclusion would artificially lower the readmission rate |
 | Feature engineering | 700+ ICD-9 diagnosis codes | Grouped into 9 clinical categories: Circulatory, Respiratory, Diabetes, Digestive, Injury, Musculoskeletal, Genitourinary, Neoplasms, Other |
 | Readmission labelling | Cryptic codes `<30`, `>30`, `NO` | Replaced with readable labels: Early Readmission, Late Readmission, No Readmission |
-| Data quality | Weight column present | Dropped — over 90% of values missing, unusable for analysis |
+| Data quality | Weight column present | Dropped — over 90% of values were missing |
 
-The full SQL cleaning and transformation logic is available in the `02_SQL_Scripts` folder.
+The full SQL logic is in the `02_SQL_Scripts` folder.
 
----
+## The ICD-9 Problem
 
-## Technical Challenges
+The most technically demanding part of this project was the diagnosis code mapping. The raw dataset contains over 700 distinct ICD-9 codes representing specific medical conditions at a level of granularity that is meaningless to anyone without a clinical background.
 
-The most technically demanding aspect of this project was the ICD-9 diagnosis code mapping. The raw dataset contains over 700 distinct diagnosis codes representing specific medical conditions at a granular clinical level. Presenting this directly in a dashboard would be meaningless to any non-medical audience.
+The solution was a series of SQL CASE statements that mapped every code to one of nine high-level categories based on ICD-9 numeric ranges. This required understanding how the ICD-9 classification system is structured, planning the logic to avoid gaps or overlaps between categories, and validating that the groupings were both clinically defensible and analytically meaningful.
 
-The solution was to write a series of SQL CASE statements that mapped every code to one of nine high-level clinical categories based on ICD-9 code ranges. This required understanding the ICD-9 classification system, planning the logic carefully to avoid gaps or overlaps, and validating that the resulting categories were both clinically meaningful and analytically useful.
-
-The end result — a clean nine-category breakdown — made the Tableau dashboard immediately interpretable by a general business audience without any medical background.
-
----
+It took longer than any other single step in the project, but it is what made the final dashboard readable to a non-medical audience.
 
 ## Technology Stack
 
@@ -95,10 +63,8 @@ The end result — a clean nine-category breakdown — made the Tableau dashboar
 | Data storage and querying | MySQL |
 | Data cleaning and transformation | MySQL (ETL pipeline) |
 | Exploratory data analysis | MySQL |
-| Dashboard and visualisation | Tableau Desktop / Tableau Public |
+| Dashboard and visualisation | Tableau Desktop and Tableau Public |
 | Version control | Git and GitHub |
-
----
 
 ## Repository Structure
 ```
@@ -122,24 +88,15 @@ Diabetes_Readmission_Analysis/
 └── README.md
 ```
 
----
-
 ## Dataset
 
-**Source:** UCI Machine Learning Repository — Diabetes 130-US Hospitals Dataset (1999–2008)
+UCI Machine Learning Repository — Diabetes 130-US Hospitals Dataset (1999–2008)
 
-Beata Strack, Jonathan P. DeShazo, Chris Gennings, Juan L. Olmo, Sebastian Ventura, Krzysztof J. Cios, and John N. Clore. "Impact of HbA1c Measurement on Hospital Readmission Rates: Analysis of 70,000 Clinical Database Patient Records." BioMed Research International, 2014.
-
----
+Strack et al. "Impact of HbA1c Measurement on Hospital Readmission Rates: Analysis of 70,000 Clinical Database Patient Records." BioMed Research International, 2014.
 
 ## Limitations
 
-- The dataset covers 1999 to 2008 — clinical practices and readmission policies have changed significantly since then
-- Only inpatient hospital encounters are included — outpatient follow-up data is absent
-- The dataset does not include actual outcomes post-discharge, only whether the patient was readmitted
-- Socioeconomic factors — insurance type, income level, geography — are not captured and likely influence readmission rates significantly
-
----
+The dataset covers 1999 to 2008, which means clinical practices and readmission policies have changed significantly since this data was collected. Only inpatient encounters are included, there is no outpatient follow-up data, which limits what can be said about post-discharge outcomes. Socioeconomic factors like insurance type, income level, and geography are not captured but almost certainly influence readmission rates in ways the model cannot see.
 
 ## License
 
